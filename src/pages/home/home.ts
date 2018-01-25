@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { ProductosProvider } from '../../providers/productos/productos';
+//navegaremos a la página producto
+import { ProductoPage } from '../producto/producto';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+  productoPage = ProductoPage;
   productos:any[] = [];
   constructor(public navCtrl: NavController, public _ps:ProductosProvider) {
     this.productos = _ps.productos;

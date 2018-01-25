@@ -12,11 +12,10 @@ import { URL_SERVICIOS } from './../../config/url.services';
 */
 @Injectable()
 export class ProductosProvider {
-  pagina:number = 0;
+  pagina:number = 1;
   public productos: any[] = [];
 
   constructor(public http: Http) {
-    console.log('Hello ProductosProvider Provider');
     this.cargar_todos();
 
   }
@@ -33,8 +32,9 @@ export class ProductosProvider {
                   if (data.error){
 
                   }else {
-                    this.productos.push(...data);
-                    console.log(this.productos);
+                    let nuevaData = this.agrupar ( data, 2 );
+                    this.productos.push(...nuevaData);
+
                     this.pagina++;
                     console.log(this.pagina);
                   }
@@ -43,9 +43,15 @@ export class ProductosProvider {
         });
     }) ;
     return promesa;
-  //  let url = URL_SERVICIOS + "pedidos/obtener_pedidos";
 
+  }
 
+  private agrupar( arr: any, tamano:number) {
+    let nuevoArreglo = [];
+    for (let i = 0; i < arr.length; i+=tamano)
+      nuevoArreglo.push( arr.slice(i, i+tamano));
+    console.log(nuevoArreglo);
+    return nuevoArreglo;
   }
 
 }

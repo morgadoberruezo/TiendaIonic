@@ -14,13 +14,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'producto.html',
 })
 export class ProductoPage {
-
+  producto:any = {};
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-
+    this.producto =  this.navParams.get("producto");
+    console.log(this.producto);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductoPage');
-  }
+
 
 }

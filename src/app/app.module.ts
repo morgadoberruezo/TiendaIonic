@@ -5,26 +5,34 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 
 //servicios
 import { ProductosProvider, CarritoProvider, UsuarioProvider } from '../providers/index.services';
 import { HttpModule } from '@angular/http';
+//pipes
+import { ImagenPipe } from '../pipes/imagen/imagen';
+//paginas
+import { HomePage, CarritoPage, CategoriasPage, ProductoPage, PorCategoriasPage,
+         LoginPage, OrdenesPage, OrdenesDetallePage, TabsPage } from '../pages/index.pages';
+
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    ImagenPipe,
+    HomePage, CarritoPage,CategoriasPage, ProductoPage, PorCategoriasPage,
+    LoginPage, OrdenesPage, OrdenesDetallePage, TabsPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage, CarritoPage,CategoriasPage, ProductoPage, PorCategoriasPage,
+    LoginPage, OrdenesPage, OrdenesDetallePage, TabsPage
   ],
   providers: [
     StatusBar,

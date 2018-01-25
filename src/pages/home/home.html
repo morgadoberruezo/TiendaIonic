@@ -8,9 +8,11 @@
 
 <ion-content padding>
   <ion-grid>
-    <ion-row *ngFor="let item of productos">
-      <ion-col>
-        <img src="http://89.40.116.98/tiendaRest/web/productos/{{item.codigo}}.jpg">
+    <ion-row *ngFor="let pares of productos">
+      <ion-col *ngFor="let item of pares"
+              [navParams]="{ producto: item }"
+              [navPush]="productoPage">
+        <img [src]="item.codigo | imagen ">
         <p>{{item.producto}} - <span>{{item.precioCompra | currency:'USD':true}}</span></p>
       </ion-col>
     </ion-row>
