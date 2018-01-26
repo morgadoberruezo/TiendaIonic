@@ -1,20 +1,43 @@
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { AlertController, Platform } from 'ionic-angular';
+import { AlertController, Platform, ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-
+//usuario service
+import { UsuarioProvider } from '../usuario/usuario';
+//paginas del modal
+import { LoginPage, CarritoPage } from '../../pages/index.pages';
 
 @Injectable()
 export class CarritoProvider {
   //definir una interfaz para los elementos que añadimos al carrito
   items:any[] = [];
   constructor(public http: Http, private alertCtrl: AlertController,
-              private platform: Platform, private storage: Storage) {
+              private platform: Platform, private storage: Storage,
+              private _us:UsuarioProvider, private modalCtrl: ModalController) {
 
 
     this.cargar_storage();
 
+  }
+
+  ver_carrito(){
+    let modal: any;
+    //hemos de detectar si el usuario inicio sesión
+    if (this._us.token){
+      //mostrar página del carrito
+      modal = this.modalCtrl.create( CarritoPage );
+    }else{
+      //mostrar el login
+      modal = this.modalCtrl.create ( LoginPage );
+      //depués del login mostramos el carrito
+    }
+    modal.present();
+    modal.onDidDismiss( (abrircarrito:boolean) =>{
+      if (abrircarrito){
+        this.modalCtrl.create( CarritoPage ).present();
+      }
+    })
   }
 
   guardar_storage(){

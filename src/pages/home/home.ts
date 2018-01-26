@@ -4,6 +4,7 @@ import { ProductosProvider } from '../../providers/productos/productos';
 //navegaremos a la página producto
 import { ProductoPage } from '../producto/producto';
 import { CarritoProvider } from '../../providers/index.services';
+import { UsuarioProvider } from '../../providers/index.services';
 
 
 @Component({
@@ -15,7 +16,8 @@ export class HomePage {
   productos:any[] = [];
   constructor(public navCtrl: NavController,
               public _ps:ProductosProvider,
-              private _cs: CarritoProvider) {
+              private _cs: CarritoProvider,
+              private _us: UsuarioProvider) {
     this.productos = _ps.productos;
   }
 
