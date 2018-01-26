@@ -3,6 +3,8 @@ import { NavController } from 'ionic-angular';
 import { ProductosProvider } from '../../providers/productos/productos';
 //navegaremos a la página producto
 import { ProductoPage } from '../producto/producto';
+import { CarritoProvider } from '../../providers/index.services';
+
 
 @Component({
   selector: 'page-home',
@@ -11,7 +13,9 @@ import { ProductoPage } from '../producto/producto';
 export class HomePage {
   productoPage = ProductoPage;
   productos:any[] = [];
-  constructor(public navCtrl: NavController, public _ps:ProductosProvider) {
+  constructor(public navCtrl: NavController,
+              public _ps:ProductosProvider,
+              private _cs: CarritoProvider) {
     this.productos = _ps.productos;
   }
 

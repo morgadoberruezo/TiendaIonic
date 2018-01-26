@@ -15,6 +15,8 @@ import { ImagenPipe } from '../pipes/imagen/imagen';
 import { HomePage, CarritoPage, CategoriasPage, ProductoPage, PorCategoriasPage,
          LoginPage, OrdenesPage, OrdenesDetallePage, TabsPage } from '../pages/index.pages';
 
+//localStorage
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,7 @@ import { HomePage, CarritoPage, CategoriasPage, ProductoPage, PorCategoriasPage,
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

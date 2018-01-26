@@ -14,6 +14,27 @@ $app-direction: ltr;
 
 @import "ionic.globals";
 
+.carrito_vacio {
+  position: relative;;
+  top:30%;
+  font-size: 20px;
+}
+
+.icon-5x {
+  font-size: 100px;
+}
+
+.carrito-numero {
+  position: absolute;
+  top: -5px;
+  left: 23px;
+
+}
+ion-icon#cart {
+  font-size: 30px;
+  padding-right: 20px;
+}
+
 
 // Shared Variables
 // --------------------------------------------------
