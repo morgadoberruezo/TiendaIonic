@@ -16,9 +16,11 @@ export class HomePage {
   productos:any[] = [];
   constructor(public navCtrl: NavController,
               public _ps:ProductosProvider,
-              private _cs: CarritoProvider,
-              private _us: UsuarioProvider) {
+              public _cs: CarritoProvider,
+              public _us: UsuarioProvider) {
     this.productos = _ps.productos;
+    console.log(this._us.activo());
+    console.log(this._cs.items);
   }
 
   siguiente( infiniteScroll ){

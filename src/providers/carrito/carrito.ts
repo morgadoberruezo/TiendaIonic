@@ -12,13 +12,21 @@ import { LoginPage, CarritoPage } from '../../pages/index.pages';
 export class CarritoProvider {
   //definir una interfaz para los elementos que añadimos al carrito
   items:any[] = [];
+  total_carrito: number = 0;
+
   constructor(public http: Http, private alertCtrl: AlertController,
               private platform: Platform, private storage: Storage,
               private _us:UsuarioProvider, private modalCtrl: ModalController) {
 
 
     this.cargar_storage();
+    this.calcular_total();
+  }
 
+  eliminar_item( idx: number ){
+    this.items.splice(idx, 1);
+    this.calcular_total();
+    this.guardar_storage();
   }
 
   ver_carrito(){
@@ -82,7 +90,7 @@ export class CarritoProvider {
 
   }
 
-  private agregar_carrito ( new_item:any ){
+  agregar_carrito ( new_item:any ){
     for ( let item of this.items ){
       if (item.codigo == new_item.codigo){
         //se intenta adicionar el mismo item.Mensaje de alerta
@@ -96,7 +104,15 @@ export class CarritoProvider {
     }
     //con el return anterior, si llega aqui no esta añadido
     this.items.push( new_item );
+    this.calcular_total();
     this.guardar_storage();
+  }
+
+  calcular_total(){
+    this.total_carrito = 0;
+    for (let item of this.items){
+      this.total_carrito += Number (item.precioCompra);
+    }
   }
 
 }
