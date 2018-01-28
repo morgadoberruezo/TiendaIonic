@@ -67,23 +67,19 @@ export class UsuarioProvider {
     if ( this.platform.is("cordova")){
       //dispositivo. Se guarda en una BD sqlite
       this.storage.set("token",this.token);
-
-      this.storage.set("usuario",this.usuario);
+      this.storage.set("usuario", JSON.stringify(this.usuario));
     }else {
       //desktop
       if (this.token){
         localStorage.setItem("token", this.token);
         localStorage.setItem("usuario", JSON.stringify(this.usuario));
-
       }else {
         localStorage.removeItem("token");
         localStorage.removeItem("usuario");
       }
-
-
-
     }
   }
+
   cargar_storage(){
     let promesa = new Promise ( (resolve, reject)=>{
         if (this.platform.is("cordova")){
@@ -110,12 +106,11 @@ export class UsuarioProvider {
         //computadora
            console.log('computadora');
           if (localStorage.getItem("token")){
-            //existe items en LS
-
+            //existe items en L
               this.token = localStorage.getItem("token") ;
           //    this.usuario = JSON.parse( localStorage.getItem("usuario") );
                this.usuario = localStorage.getItem("usuario") ;
-               console.log(this.usuario.correo);
+
           }
           resolve();//se acaba la promesa
 

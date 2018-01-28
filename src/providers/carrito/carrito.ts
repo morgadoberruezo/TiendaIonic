@@ -15,6 +15,7 @@ export class CarritoProvider {
   //definir una interfaz para los elementos que añadimos al carrito
   items:any[] = [];
   total_carrito: number = 0;
+  public ordenes: any[] = [];
 
   constructor(public http: Http, private alertCtrl: AlertController,
               private platform: Platform, private storage: Storage,
@@ -51,8 +52,9 @@ export class CarritoProvider {
   //  let   params = "data=" + JSON.stringify(data);
 
     let url = URL_SERVICIOS + "pedidos/realizarOrden";
-    console.log(url);
-    console.log(params);
+  //  let headers = new Headers({'Content-Type':'application/x-www-form-urlencoded'});
+  //    return (this._http.post(this.url+"/admin/login", params, {headers:headers})
+
     this.http.post( url, params )
              .subscribe( resp => {
                console.log(resp);
@@ -66,7 +68,7 @@ export class CarritoProvider {
                else {
                  this.items = [];
                  this.alertCtrl.create({
-                   title:"Orden realizada!!",
+                   title:"Orden realizada con éxito!!",
                    subTitle: "Contactaremos on usted",
                    buttons:["OK"]
                  }).present();
@@ -165,6 +167,33 @@ export class CarritoProvider {
     for (let item of this.items){
       this.total_carrito += Number (item.precioCompra);
     }
+  }
+
+  cargar_ordenes(){
+    let url = URL_SERVICIOS + "pedidos/obtener_pedidos";
+    let params = new URLSearchParams();
+
+    //usuario de la sesión
+    let usuario:any = JSON.parse(this._us.usuario);
+    console.log(usuario);
+    let data:any = {
+      'id': usuario.sub,
+      'getHash':this._us.token
+    }
+    console.log(data);
+    params.append("data",JSON.stringify(data));
+
+    this.http.post ( url, params )
+              .map( resp => resp.json())
+              .subscribe (data => {
+                if (data.status == "error"){
+                    //manejar el error
+                }else {
+                  console.log(data);
+                  this.ordenes = data;
+              }
+
+              });
   }
 
 }

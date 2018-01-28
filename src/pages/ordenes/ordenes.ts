@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the OrdenesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { CarritoProvider } from '../../providers/index.services';
+import { OrdenesDetallePage } from '../../pages/index.pages';
 
 @IonicPage()
 @Component({
@@ -14,12 +9,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'ordenes.html',
 })
 export class OrdenesPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  ordenesDetalle = OrdenesDetallePage;
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public _cs: CarritoProvider) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad OrdenesPage');
+  ionViewWillEnter() {
+    console.log('cargando ordenes ...');
+    this._cs.cargar_ordenes();
   }
 
 }
