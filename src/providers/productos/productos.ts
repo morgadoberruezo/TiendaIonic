@@ -4,12 +4,7 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { URL_SERVICIOS } from './../../config/url.services';
 
-/*
-  Generated class for the ProductosProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class ProductosProvider {
   pagina:number = 1;

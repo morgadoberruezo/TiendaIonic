@@ -7,8 +7,8 @@ import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class UsuarioProvider {
-  token:string;
-  usuario:any;
+  public token:string;
+  public usuario:any;
 
   constructor(public http: Http, private alertCtrl: AlertController,
               private platform: Platform, private storage: Storage) {
@@ -48,6 +48,7 @@ export class UsuarioProvider {
                     }else {
                       this.token = data_resp.token;
                       this.usuario = data_resp.usuario;
+                      console.log(this.usuario);
                       //Guardamos en storage
                       this.guardar_storage();
                     }
@@ -66,12 +67,14 @@ export class UsuarioProvider {
     if ( this.platform.is("cordova")){
       //dispositivo. Se guarda en una BD sqlite
       this.storage.set("token",this.token);
+
       this.storage.set("usuario",this.usuario);
     }else {
       //desktop
       if (this.token){
         localStorage.setItem("token", this.token);
-        localStorage.setItem("usuario", this.usuario);
+        localStorage.setItem("usuario", JSON.stringify(this.usuario));
+
       }else {
         localStorage.removeItem("token");
         localStorage.removeItem("usuario");
@@ -105,11 +108,14 @@ export class UsuarioProvider {
               })
         }else {
         //computadora
+           console.log('computadora');
           if (localStorage.getItem("token")){
             //existe items en LS
 
               this.token = localStorage.getItem("token") ;
-              this.usuario = JSON.parse( localStorage.getItem("usuario") );
+          //    this.usuario = JSON.parse( localStorage.getItem("usuario") );
+               this.usuario = localStorage.getItem("usuario") ;
+               console.log(this.usuario.correo);
           }
           resolve();//se acaba la promesa
 

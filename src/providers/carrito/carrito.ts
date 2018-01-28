@@ -1,4 +1,4 @@
-import { Http } from '@angular/http';
+import { Http, URLSearchParams } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { AlertController, Platform, ModalController } from 'ionic-angular';
@@ -7,6 +7,8 @@ import { Storage } from '@ionic/storage';
 import { UsuarioProvider } from '../usuario/usuario';
 //paginas del modal
 import { LoginPage, CarritoPage } from '../../pages/index.pages';
+
+import { URL_SERVICIOS } from '../../config/url.services';
 
 @Injectable()
 export class CarritoProvider {
@@ -21,6 +23,56 @@ export class CarritoProvider {
 
     this.cargar_storage();
     this.calcular_total();
+  }
+
+  realizar_pedido() {
+    let params = new URLSearchParams();
+    let codigos:string[]=[];
+    let elementos: any;
+    for (let item of this.items){
+      codigos.push(item.codigo);
+    }
+    //los dejamos en una variable separados por ,
+    console.log (codigos.join(","));
+
+  //  usuario:any = JSON.parse(localStorage.getItem('usuario')));
+  //convertimos el objeto usuario del LS a un objeto Json
+    let usuario:any = JSON.parse(this._us.usuario);
+    console.log(usuario);
+    let data:any = {
+      'id': usuario.sub,
+      'items':codigos.join(","),
+      'getHash':this._us.token
+    }
+    console.log(data);
+
+    params.append("data",JSON.stringify(data));
+
+  //  let   params = "data=" + JSON.stringify(data);
+
+    let url = URL_SERVICIOS + "pedidos/realizarOrden";
+    console.log(url);
+    console.log(params);
+    this.http.post( url, params )
+             .subscribe( resp => {
+               console.log(resp);
+               let respuesta = resp.json();
+               if (respuesta.status != "success")
+                 this.alertCtrl.create({
+                   title:"Error en la orden!!",
+                   subTitle: respuesta.msg,
+                   buttons:["OK"]
+                 }).present();
+               else {
+                 this.items = [];
+                 this.alertCtrl.create({
+                   title:"Orden realizada!!",
+                   subTitle: "Contactaremos on usted",
+                   buttons:["OK"]
+                 }).present();
+               }
+             })
+
   }
 
   eliminar_item( idx: number ){
