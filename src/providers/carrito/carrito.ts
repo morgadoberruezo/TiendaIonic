@@ -38,7 +38,9 @@ export class CarritoProvider {
 
   //  usuario:any = JSON.parse(localStorage.getItem('usuario')));
   //convertimos el objeto usuario del LS a un objeto Json
-    let usuario:any = JSON.parse(this._us.usuario);
+    //let usuario:any = JSON.parse(this._us.usuario);
+    let usuario:any = this._us.usuario;
+
     console.log(usuario);
     let data:any = {
       'id': usuario.sub,
@@ -174,7 +176,9 @@ export class CarritoProvider {
     let params = new URLSearchParams();
 
     //usuario de la sesión
-    let usuario:any = JSON.parse(this._us.usuario);
+    //let usuario:any = JSON.parse(this._us.usuario);
+    let usuario:any = this._us.usuario;
+
     console.log(usuario);
     let data:any = {
       'id': usuario.sub,
@@ -194,6 +198,33 @@ export class CarritoProvider {
               }
 
               });
+  }
+
+  eliminar_orden( idx: number ){
+    this.ordenes.splice(idx, 1);
+
+  }
+
+  borrar_orden( ordenId ){
+    console.log (ordenId);
+
+    let url = URL_SERVICIOS + "pedidos/borrar_orden";
+    let params = new URLSearchParams();
+
+    let usuario:any = JSON.parse(this._us.usuario);
+    //let usuario:any = this._us.usuario;
+    console.log(usuario);
+    let data:any = {
+      'id': usuario.sub,
+      'ordenId': ordenId,
+      'getHash':this._us.token
+    }
+    console.log(data);
+    params.append("data",JSON.stringify(data));
+
+    return this.http.post ( url, params )
+              .map( resp => resp.json());
+
   }
 
 }

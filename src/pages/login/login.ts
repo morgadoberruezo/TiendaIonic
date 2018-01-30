@@ -26,8 +26,11 @@ export class LoginPage {
                     this.viewCtrl.dismiss(true);
                   }
               });
+
   }
 
-
+  nuevo() {
+    console.log ('nuevo');
+  }
 
 }

@@ -10,7 +10,7 @@
 
 <ion-content text-center>
   <ion-list>
-    <ion-item *ngFor="let item of orden.detalle">
+    <ion-item *ngFor="let item of orden.detalle; let i = index">
       <img [src]="item.producto.codigo | imagen">
       <h5>{{ item.producto.producto }}</h5>
       <h3>{{ item.producto.linea }}</h3>
@@ -24,6 +24,7 @@
   <button ion-button
           block
           color="danger"
+          (click) = "borrar_orden(  orden.orden_id, i )"
           >
       Eliminar Orden
   </button>
